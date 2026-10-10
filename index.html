@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FinFlow</title>
+    <style>
+        /* Сброс стилей и базовые настройки */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #F8FAFC; color: #0F172A; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* Header */
+        header { background-color: #0F172A; color: white; padding: 25px 20px; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; }
+        h1 { font-size: 22px; margin-bottom: 15px; color: #10B981; display: flex; align-items: center; gap: 8px;}
+        .balance-card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 16px; margin-top: 10px; }
+        .balance-card p { font-size: 14px; opacity: 0.8; margin-bottom: 5px;}
+        .balance-card h2 { font-size: 34px; font-weight: 700; }
+
+        /* Main Content */
+        main { flex: 1; padding: 20px; overflow-y: auto; }
+        section { margin-bottom: 25px; }
+        h3 { font-size: 18px; margin-bottom: 15px; color: #1E293B; font-weight: 600;}
+        
+        /* Flexbox Categories */
+        .categories { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .category { flex: 1; min-width: 30%; background: white; padding: 15px 10px; text-align: center; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #F1F5F9;}
+        .category-icon { font-size: 28px; margin-bottom: 8px; }
+        .category-name { font-size: 12px; font-weight: 600; color: #475569;}
+        
+        /* Transactions List */
+        .transaction { display: flex; justify-content: space-between; align-items: center; background: white; padding: 16px; border-radius: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid #F1F5F9;}
+        .t-info { display: flex; align-items: center; gap: 15px; }
+        .t-icon { font-size: 22px; background: #E0F2FE; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .t-details p { font-weight: 600; font-size: 15px; margin-bottom: 3px;}
+        .t-details small { color: #64748B; font-size: 13px; }
+        .t-amount { font-weight: 700; color: #EF4444; font-size: 15px;}
+        .t-amount.income { color: #10B981; }
+
+        /* Bottom Nav (Mobile First) */
+        nav { display: flex; justify-content: space-around; background: white; padding: 12px 10px; border-top: 1px solid #E2E8F0; padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+        .nav-item { text-align: center; color: #94A3B8; font-size: 11px; font-weight: 600;}
+        .nav-item.active { color: #10B981; }
+        .nav-icon { font-size: 24px; display: block; margin-bottom: 4px; filter: grayscale(100%); opacity: 0.6;}
+        .nav-item.active .nav-icon { filter: grayscale(0%); opacity: 1;}
+        
+        /* Media Queries for Desktop */
+        @media (min-width: 768px) {
+            body { flex-direction: row; }
+            nav { flex-direction: column; justify-content: flex-start; padding-top: 40px; border-top: none; border-right: 1px solid #E2E8F0; min-width: 220px; gap: 30px;}
+            .nav-item { font-size: 15px; display: flex; align-items: center; gap: 15px; padding-left: 30px;}
+            .nav-icon { margin-bottom: 0; font-size: 22px;}
+            header { border-radius: 0; text-align: left; padding: 40px; }
+            .categories { justify-content: flex-start; gap: 20px;}
+            .category { min-width: 140px; flex: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация (снизу на смартфонах, слева на ПК) -->
+    <nav>
+        <div class="nav-item active"><span class="nav-icon">📊</span>Дашборд</div>
+        <div class="nav-item"><span class="nav-icon">💳</span>Счета</div>
+        <div class="nav-item"><span class="nav-icon">⚙️</span>Настройки</div>
+    </nav>
+
+    <!-- Основной контейнер -->
+    <div style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+        <header>
+            <h1>FinFlow</h1>
+            <div class="balance-card">
+                <p>Общий текущий баланс</p>
+                <h2>4,850.50 BYN</h2>
+            </div>
+        </header>
+
+        <main>
+            <section>
+                <h3>Быстрые категории</h3>
+                <div class="categories">
+                    <div class="category">
+                        <div class="category-icon">🛒</div>
+                        <div class="category-name">Продукты</div>
+                    </div>
+                    <div class="category">
+                        <div class="category-icon">🚕</div>
+                        <div class="category-name">Транспорт</div>
+                    </div>
+                    <div class="category">
+                        <div class="category-icon">☕</div>
+                        <div class="category-name">Кафе</div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3>Недавние транзакции</h3>
+                <div class="transaction">
+                    <div class="t-info">
+                        <div class="t-icon">🛒</div>
+                        <div class="t-details">
+                            <p>Супермаркет Green</p>
+                            <small>Сегодня, 14:32</small>
+                        </div>
+                    </div>
+                    <div class="t-amount">- 42.50 BYN</div>
+                </div>
+                <div class="transaction">
+                    <div class="t-info">
+                        <div class="t-icon" style="background: #ECFDF5;">💵</div>
+                        <div class="t-details">
+                            <p>Пополнение счета</p>
+                            <small>Вчера, 18:00</small>
+                        </div>
+                    </div>
+                    <div class="t-amount income">+ 1,200.00 BYN</div>
+                </div>
+                <div class="transaction">
+                    <div class="t-info">
+                        <div class="t-icon">☕</div>
+                        <div class="t-details">
+                            <p>Кофейня Paragraph</p>
+                            <small>Вчера, 10:15</small>
+                        </div>
+                    </div>
+                    <div class="t-amount">- 8.50 BYN</div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
